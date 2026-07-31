@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { EventPage } from "./pages/EventPage";
 import { EventsPage } from "./pages/EventsPage";
-import { Provider } from "./components/ui/provider";
+import { Provider as ChakraProvider } from "./components/ui/provider";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
 import { EventProvider } from "./context/EventContext";
@@ -30,9 +30,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <EventProvider>
-      <Provider>
+      <ChakraProvider>
         <RouterProvider router={router} />
-      </Provider>
+      </ChakraProvider>
     </EventProvider>
   </React.StrictMode>,
 );
