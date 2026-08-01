@@ -27,7 +27,7 @@ import { toaster } from "../components/ui/toaster";
 
 export const EventPage = () => {
   const { eventId } = useParams();
-  const { events, categories } = useContext(EventContext);
+  const { events, setEvents, categories } = useContext(EventContext);
   const navigate = useNavigate();
 
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -62,7 +62,52 @@ export const EventPage = () => {
     setEditCategoryIds(event.categoryIds);
     setIsEditOpen(true);
   };
+  const handleSave = async () => {
+    const updatedEvent = {
+      ...event,
+      title: editTitle,
+      description: editDescription,
+      location: editLocation,
+      image: editImage,
+      startTime: new Date(editStartTime).toISOString(),
+      endTime: new Date(editEndTime).toISOString(),
+      categoryIds: editCategoryIds,
+    };
 
+    try {
+      const response = await fetch(`http://localhost:3000/events/${event.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedEvent),
+      });
+      if (response.ok) {
+        toaster.create({
+          title: "Event updated",
+          description: "The event was updated successfully.",
+          type: "success",
+        });
+
+        setEvents((prevEvents) =>
+          prevEvents.map((e) => (e.id === updatedEvent.id ? updatedEvent : e)),
+        );
+
+        setIsEditOpen(false);
+      } else {
+        toaster.create({
+          title: "Update failed",
+          description: "The event could not be updated.",
+          type: "error",
+        });
+      }
+
+      console.log(response);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleCloseEdit = () => {
     setIsEditOpen(false);
   };
@@ -238,7 +283,9 @@ export const EventPage = () => {
                 Cancel
               </Button>
 
-              <Button colorPalette="blue">Save</Button>
+              <Button colorPalette="blue" onClick={handleSave}>
+                Save
+              </Button>
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Positioner>

@@ -28,7 +28,16 @@ export const EventProvider = ({ children }) => {
     fetchData();
   }, []);
   return (
-    <EventContext.Provider value={{ events, categories, loading, error }}>
+    <EventContext.Provider
+      value={{
+        events,
+        setEvents,
+        categories,
+        loading,
+        error,
+      }}
+    >
+      {" "}
       {children}
     </EventContext.Provider>
   );
