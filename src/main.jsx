@@ -6,6 +6,7 @@ import { Provider as ChakraProvider } from "./components/ui/provider";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
 import { EventProvider } from "./context/EventContext";
+import { Toaster } from "./components/ui/toaster";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <EventProvider>
       <ChakraProvider>
+        <Toaster />
         <RouterProvider router={router} />
       </ChakraProvider>
     </EventProvider>
