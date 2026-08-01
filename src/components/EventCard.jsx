@@ -36,8 +36,6 @@ export const EventCard = ({ event }) => {
           <Text mt={3}>
             Time {startTime}-{endTime}
           </Text>
-
-          <Text mt={3}></Text>
         </Card.Body>
       </Card.Root>
     </Link>

@@ -1,4 +1,4 @@
-import { Heading, Text, Image, Card } from "@chakra-ui/react";
+import { Heading, Text, Image, Card, Button, HStack } from "@chakra-ui/react";
 import {
   formatDate,
   formatTime,
@@ -6,7 +6,8 @@ import {
 } from "../utils/dateformatter.js";
 import { useContext } from "react";
 import { EventContext } from "../context/EventContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 export const EventPage = () => {
   const { eventId } = useParams();
   const { events, categories } = useContext(EventContext);
@@ -14,7 +15,31 @@ export const EventPage = () => {
   if (!event) {
     return <Heading>Loading...</Heading>;
   }
+  const navigate = useNavigate();
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this event?",
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/events/${event.id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        navigate("/");
+      } else {
+        console.error("Failed to delete event");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const date = formatDate(event.startTime);
   const startTime = formatTime(event.startTime);
   const endTime = formatTime(event.endTime);
@@ -38,8 +63,14 @@ export const EventPage = () => {
         <Text mt={3}>
           Time {startTime}-{endTime}
         </Text>
-
-        <Text mt={3}></Text>
+        <HStack gap={4} mt={3} px={4} py={2}>
+          <Button mt={3} colorPalette="blue">
+            Edit Event
+          </Button>
+          <Button mt={3} colorPalette="red" onClick={handleDelete}>
+            Delete Event
+          </Button>
+        </HStack>
       </Card.Body>
     </Card.Root>
   );
