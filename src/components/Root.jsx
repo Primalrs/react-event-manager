@@ -4,7 +4,7 @@ import { Box } from "@chakra-ui/react";
 
 export const Root = () => {
   return (
-    <Box>
+    <Box maxW="1400px" mx="auto" px={4}>
       <Navigation />
       <Outlet />
     </Box>

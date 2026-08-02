@@ -24,6 +24,24 @@ export const AddEventModal = ({ open, onClose }) => {
   const [endTime, setEndTime] = useState("");
   const [categoryIds, setCategoryIds] = useState([]);
   const handleSave = async () => {
+    if (
+      !title ||
+      !description ||
+      !location ||
+      !image ||
+      !startTime ||
+      !endTime ||
+      categoryIds.length === 0
+    ) {
+      toaster.create({
+        title: "Missing required fields",
+        description: "Please fill in all required fields.",
+        type: "error",
+      });
+
+      return;
+    }
+
     const newEvent = {
       title,
       description,
@@ -33,8 +51,9 @@ export const AddEventModal = ({ open, onClose }) => {
       endTime: new Date(endTime).toISOString(),
       categoryIds,
       createdBy: 1,
-    };
 
+      // fetch POST...
+    };
     try {
       const response = await fetch("http://localhost:3000/events", {
         method: "POST",
