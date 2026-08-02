@@ -11,6 +11,7 @@ import {
 import { useContext, useState } from "react";
 import { EventContext } from "../context/EventContext";
 import { EventCard } from "../components/EventCard";
+import { EventSkeleton } from "../components/EventSkeleton";
 
 export const EventsPage = () => {
   const { events, loading, error, categories } = useContext(EventContext);
@@ -28,7 +29,19 @@ export const EventsPage = () => {
     return matchesSearch && matchesCategory;
   });
   if (loading) {
-    return <Heading>Loading...</Heading>;
+    return (
+      <SimpleGrid
+        columns={{ base: 1, md: 2, lg: 3, xl: 3 }}
+        spacing={8}
+        rowGap={8}
+        px={{ base: 2, md: 4, lg: 6 }}
+        py={{ base: 2, md: 4, lg: 6 }}
+      >
+        {Array.from({ length: 6 }).map((_, index) => (
+          <EventSkeleton key={index} />
+        ))}
+      </SimpleGrid>
+    );
   }
 
   if (error) {
@@ -49,7 +62,7 @@ export const EventsPage = () => {
           placeholder="Search events..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-        />{" "}
+        />
         <CheckboxGroup
           value={categoryIds.map(String)}
           onValueChange={(values) => setCategoryIds(values.map(Number))}

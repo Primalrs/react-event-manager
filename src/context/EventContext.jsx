@@ -37,7 +37,6 @@ export const EventProvider = ({ children }) => {
         error,
       }}
     >
-      {" "}
       {children}
     </EventContext.Provider>
   );

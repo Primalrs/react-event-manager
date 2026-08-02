@@ -82,6 +82,7 @@ export const EventPage = () => {
         },
         body: JSON.stringify(updatedEvent),
       });
+
       if (response.ok) {
         toaster.create({
           title: "Event updated",
@@ -101,13 +102,17 @@ export const EventPage = () => {
           type: "error",
         });
       }
-
-      console.log(response);
-      console.log(response);
     } catch (error) {
+      toaster.create({
+        title: "Network error",
+        description: "Could not connect to the server.",
+        type: "error",
+      });
+
       console.error(error);
     }
   };
+
   const handleCloseEdit = () => {
     setIsEditOpen(false);
   };
