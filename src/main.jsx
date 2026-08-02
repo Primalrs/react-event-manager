@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
 import { EventProvider } from "./context/EventContext";
 import { Toaster } from "./components/ui/toaster";
+import { AboutPage } from "./pages/AboutPage";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
         element: <EventPage />,
         // loader: postLoader,
         // action: addComment,
+      },
+      {
+        path: "/about",
+        element: <AboutPage />,
       },
     ],
   },

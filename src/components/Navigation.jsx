@@ -9,6 +9,7 @@ export const Navigation = () => {
       <Flex gap={2}>
         <Link href="/">Events</Link>
         <Link onClick={() => setIsAddOpen(true)}>Add Event</Link>
+        <Link href="/about">About</Link>{" "}
         <AddEventModal open={isAddOpen} onClose={() => setIsAddOpen(false)} />
       </Flex>
     </nav>
