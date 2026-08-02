@@ -131,6 +131,8 @@ export const EventPage = () => {
           type: "success",
         });
 
+        setEvents((prevEvents) => prevEvents.filter((e) => e.id !== event.id));
+
         navigate("/");
       } else {
         toaster.create({

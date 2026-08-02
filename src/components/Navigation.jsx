@@ -1,12 +1,16 @@
-import { Flex, Link } from '@chakra-ui/react';
+import { Flex, Link } from "@chakra-ui/react";
+import { useState } from "react";
+import { AddEventModal } from "./AddEventModal";
 
 export const Navigation = () => {
-    return (
-        <nav>
-            <Flex gap={2}>
-                <Link href="/">Events</Link>
-                <Link>Add Event</Link>
-            </Flex>
-        </nav>
-    );
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  return (
+    <nav>
+      <Flex gap={2}>
+        <Link href="/">Events</Link>
+        <Link onClick={() => setIsAddOpen(true)}>Add Event</Link>
+        <AddEventModal open={isAddOpen} onClose={() => setIsAddOpen(false)} />
+      </Flex>
+    </nav>
+  );
 };
