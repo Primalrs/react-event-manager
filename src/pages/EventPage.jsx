@@ -13,6 +13,7 @@ import {
   CheckboxGroup,
   VStack,
   Fieldset,
+  Badge,
 } from "@chakra-ui/react";
 import {
   formatDate,
@@ -24,6 +25,7 @@ import { useContext, useState } from "react";
 import { EventContext } from "../context/EventContext";
 import { useParams, useNavigate } from "react-router-dom";
 import { toaster } from "../components/ui/toaster";
+import { EventDetailSkeleton } from "../components/EventDetailSkeleton";
 
 export const EventPage = () => {
   const { eventId } = useParams();
@@ -43,7 +45,7 @@ export const EventPage = () => {
 
   // Hooks must all be above this return
   if (!event) {
-    return <Heading>Loading...</Heading>;
+    return <EventDetailSkeleton />;
   }
 
   // Display values
@@ -171,7 +173,14 @@ export const EventPage = () => {
         <Card.Body>
           <Heading size="2xl">{event.title}</Heading>
 
-          <Text mt={3}>{categoryNames}</Text>
+          <HStack mt={3} gap={2}>
+            <Text>Categories:</Text>
+            {categoryNames.split(", ").map((category) => (
+              <Badge size="xl" key={category}>
+                {category}
+              </Badge>
+            ))}
+          </HStack>
           <Text mt={3}>{event.description}</Text>
           <Text mt={3}>{event.location}</Text>
           <Text mt={3}>Date: {date}</Text>

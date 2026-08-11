@@ -1,4 +1,4 @@
-import { Heading, Text, Image, Card } from "@chakra-ui/react";
+import { Heading, Text, Image, Card, Badge, HStack } from "@chakra-ui/react";
 import {
   formatDate,
   formatTime,
@@ -29,7 +29,14 @@ export const EventCard = ({ event }) => {
         />
         <Card.Body>
           <Heading size="md">{event.title}</Heading>
-          <Text mt={3}> {categoryNames}</Text>
+          <HStack mt={3} gap={2}>
+            <Text>Categories:</Text>
+            {categoryNames.split(", ").map((category) => (
+              <Badge size="lg" key={category}>
+                {category}
+              </Badge>
+            ))}
+          </HStack>{" "}
           <Text mt={3}>{event.description} </Text>
           <Text mt={3}>{event.location}</Text>
           <Text mt={3}>Date: {date}</Text>
